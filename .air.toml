@@ -1,10 +1,11 @@
 root = "."
+testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
   args_bin = []
-  bin = "./tmp"
-  cmd = "go build -buildvcs=false -o ./tmp ."
+  bin = "./tmp/main"
+  cmd = "go build -buildvcs=false -o ./tmp/main ."
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata"]
   exclude_file = []
@@ -27,11 +28,11 @@ tmp_dir = "tmp"
   stop_on_error = false
 
 [color]
-  app = "blue"          # Define a cor para os logs principais da aplicação
-  build = "yellow"      # Cor para logs de build
-  main = "magenta"      # Cor para o arquivo principal
-  runner = "green"      # Cor para logs do processo runner
-  watcher = "cyan"      # Cor para logs do watcher (observador de mudanças)
+  app = ""
+  build = "yellow"
+  main = "magenta"
+  runner = "green"
+  watcher = "cyan"
 
 [log]
   main_only = false

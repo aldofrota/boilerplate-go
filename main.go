@@ -11,15 +11,9 @@ import (
 
 	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 
-	"boilerplate-go/main/factories"
-	"boilerplate-go/main/routes"
+	"boilerplate-go/app/main/factories"
+	"boilerplate-go/app/main/routes"
 )
-
-//	@title			Concierge
-//	@version		0.0.1
-//	@description	API para gerenciamento de rollouts
-
-// @host		localhost:9989
 
 func main() {
 	go func() {

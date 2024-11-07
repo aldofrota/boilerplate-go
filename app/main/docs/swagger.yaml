@@ -1,0 +1,35 @@
+definitions:
+  protocols.HttpResponse:
+    properties:
+      body: {}
+      statusCode:
+        example: 200
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Validate if mongo database, redis database is connected
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/protocols.HttpResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/protocols.HttpResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/protocols.HttpResponse'
+      summary: Validate if service is healthy
+      tags:
+      - Health Check
+swagger: "2.0"

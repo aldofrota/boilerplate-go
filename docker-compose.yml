@@ -1,3 +1,7 @@
+networks:
+  rdconversas:
+    driver: bridge
+
 services:
   redis:
     image: redis:6.2-alpine
@@ -8,6 +12,8 @@ services:
     command: redis-server --save 20 1 --loglevel warning
     volumes:
       - cache:/data
+    networks:
+      - rdconversas
 
   mongodb:
     image: mongo
@@ -17,12 +23,14 @@ services:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
+    networks:
+      - rdconversas
 
   boilerplate-go:
     build:
       context: .
-      dockerfile: ./.docker/dockerfiles/Dockerfile
-    entrypoint: sh ./.docker/entrypoints/entrypoint-dev.sh
+      dockerfile: .docker/dockerfiles/Dockerfile
+    entrypoint: ["bash", "./.docker/entrypoints/entrypoint-dev.sh"]
     container_name: boilerplate-go
     restart: always
     ports:
@@ -34,6 +42,8 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
       MONGO_URI: mongodb://mongodb/boilerplate
+    networks:
+      - rdconversas
 
 volumes:
   mongodb_data:
