@@ -1,0 +1,42 @@
+services:
+  redis:
+    image: redis:6.2-alpine
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - cache:/data
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  boilerplate-go:
+    build:
+      context: .
+      dockerfile: ./.docker/dockerfiles/Dockerfile
+    entrypoint: sh ./.docker/entrypoints/entrypoint-dev.sh
+    container_name: boilerplate-go
+    restart: always
+    ports:
+      - 9001:9001
+    volumes:
+      - .:/usr/boilerplate-go/app
+    environment:
+      PORT: 9001
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      MONGO_URI: mongodb://mongodb/boilerplate
+
+volumes:
+  mongodb_data:
+    driver: local
+  cache:
+    driver: local
